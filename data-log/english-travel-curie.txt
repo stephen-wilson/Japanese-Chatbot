@@ -1,0 +1,23 @@
+#Using V1 parameters
+
+The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
+
+Human: Hello, who are you?
+AI: I am an AI created by OpenAI. How can I help you today?
+Human: I want to go to Japan. Where should I go?
+AI: Japan is a beautiful country with a rich culture. I think Kyoto would be a great place to start your journey.
+Human: What is the best thing about Kyoto?
+AI: The best thing about Kyoto is the stunning architecture and the delicious food.
+Human: What is the most fun thing to do there?
+AI:
+
+There is a lot to do in Kyoto, but the most fun thing might be to explore the city on a walking tour.
+Human: What is the best time of year to visit?
+AI:
+
+The best time to visit Kyoto is during the springtime when the cherry blossoms are in bloom.
+Human: Ok, I'll visit Kyoto then, thanks!
+AI:
+
+You're welcome! Have a great time in Kyoto!
+Human: 

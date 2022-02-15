@@ -1,0 +1,5 @@
+I want to go to Japan. Where should I go?
+What is the best thing about <place>?
+What is the most fun thing to do there?
+What is the best time of year to visit?
+Ok, I'll visit <place> then, thanks!
