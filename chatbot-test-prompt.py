@@ -12,8 +12,8 @@ import openai
 openai.api_key = "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"
 
 # translated version of OpenAI's english chatbot session prompt
-start_sequence = "\nAI: "
-restart_sequence = "\n人間: "
+start_sequence = "AI: "
+restart_sequence = "人間: "
 session_prompt = """以下は、AIアシスタントとの会話です。このアシスタントは、親切で、創造的で、賢くて、とてもフレンドリーです。
 
 人間: こんにちは、あなたは誰ですか？
@@ -29,7 +29,8 @@ def chat(chat_input, chat_log=None):
       max_tokens=64,
       top_p=1,
       frequency_penalty=0.1,
-      presence_penalty=0
+      presence_penalty=0,
+      stop=[start_sequence, restart_sequence],
     )
     story = response['choices'][0]['text']
     return str(story)
@@ -40,7 +41,7 @@ def append_interaction_to_chat_log(chat_input, bot_response, chat_log=None):
     return f'{chat_log}{restart_sequence} {chat_input}{start_sequence}{bot_response}'
 
 print("Welcome to the chatbot!\n NOTE: Please try not to use too many tokens for the chatbot (e.g. a whole paragraph or essay as input for each message) as that will start to reach my quota limit...\n But besides that, feel free to test out the bot! Press 'ctrl C' to stop the chat!\n Type a message to Makoto!")
-print(session_prompt, end='')
+print(session_prompt)
 while True:
     print(restart_sequence, end='')
     user_input = input()

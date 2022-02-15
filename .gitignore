@@ -1,4 +1,5 @@
 .idea/*
 *~
 chatbot_env/*
+jp_chatbot_env/*
 __pycache__/*
