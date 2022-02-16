@@ -2,9 +2,7 @@ import deepl
 from chatbot_direct import *
 
 # use os.getenv() for actual deployment in order to hide the API key
-translator = deepl.Translator()
-
-# note: untested code, as we need an api key
+translator = deepl.Translator("688506d1-e0db-eb66-9b4f-b2ba1a41dfad:fx")
 
 def translate(text, target_lang):
     return translator.translate_text(text, target_lang=target_lang)
@@ -22,14 +20,11 @@ chat_parameters = chat_parameters1
 def chained_chat():
     chat_log = session_prompt
     while True:
-        # only translate the input. Maybe translating the entire chat
-        # log would make the responses better, but that'll also be
-        # more expensive
-        user_input = translate(input(), "EN")
+        user_input = translate(input(), "EN-US")
         chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
-        bot_response = translate(get_bot_response(chat_log), "JA")
+        bot_response = get_bot_response(chat_log)
         chat_log += bot_response
-        print(bot_response)
+        print(translate(bot_response, "JA"))
 
 if __name__ == "__main__":
     welcome()
