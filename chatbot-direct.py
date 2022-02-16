@@ -11,8 +11,8 @@ import openai
 
 openai.api_key = "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"
 
-start_sequence = "\n誠: "
-restart_sequence = "\nあなた: "
+start_sequence = "誠:"
+restart_sequence = "あなた:"
 session_prompt = """誠は優しくて、協力的で、親切で、頭のいいチャットボットです。
 
 あなた: 最近元気ですか？
@@ -40,27 +40,37 @@ session_prompt = """誠は優しくて、協力的で、親切で、頭のいい
 
 chat_log = session_prompt
 
-def chat():
-    response = openai.Completion.create(
-      engine="text-curie-001",
-      prompt= chat_log,
-      temperature=0.7,
-      max_tokens=64,
-      top_p=1,
-      frequency_penalty=0.1,
-      presence_penalty=0,
-      stop=["あなた:", "誠:"]
-    )
-    story = response['choices'][0]['text']
-    return str(story)
+chat_parameters = {'engine' : 'text-curie-001',
+                   'temperature' : 0.7,
+                   'max_tokens' : 64,
+                   'top_p' : 1,
+                   'frequency_penalty' : 0.1,
+                   'presence_penalty' : 0,
+                   'stop' : [start_sequence, restart_sequence]}
 
-print("""Welcome to the chatbot!
+def get_bot_response(prompt):
+    response = openai.Completion.create(
+        prompt=prompt,
+        **chat_parameters
+    )
+    bot_response = response['choices'][0]['text']
+    return str(bot_response)
+
+def welcome():
+    print("""Welcome to the chatbot!
  NOTE: Please try not to use too many tokens for the chatbot (e.g. a whole paragraph or essay as input for each message) as that will start to reach my quota limit...
  But besides that, feel free to test out the bot! Press 'ctrl C' to stop the chat!
  Type a message to Makoto!""")
-while True:
+
+def chat():
+    global chat_log
     user_input = input()
-    chat_log += restart_sequence + user_input + start_sequence
-    bot_response = chat()
+    chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
+    bot_response = get_bot_response(chat_log)
     chat_log += bot_response
     print(bot_response)
+    chat()
+
+if __name__ == "__main__":
+    welcome()
+    chat()
