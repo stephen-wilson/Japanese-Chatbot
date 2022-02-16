@@ -1,4 +1,4 @@
-#Using V1 parameters
+#Using chat_parameters1
 
 The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
 

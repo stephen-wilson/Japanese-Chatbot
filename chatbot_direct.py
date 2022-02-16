@@ -1,16 +1,12 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jan 28 21:25:01 2022
-
-@author: Stephen
-"""
-
-# for using os.getenv() for if it is actually being deployed, in order to hide the API key
-#import os
 import openai
+#import os
+from parameters import *
 
+# use os.getenv() for actual deployment in order to hide the API key
 openai.api_key = "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"
 
+# for importing, you may want to modify start_sequence,
+# restart_sequence, session_prompt, and chat_parameters
 start_sequence = "誠:"
 restart_sequence = "あなた:"
 session_prompt = """誠は優しくて、協力的で、親切で、頭のいいチャットボットです。
@@ -38,17 +34,12 @@ session_prompt = """誠は優しくて、協力的で、親切で、頭のいい
 あなた: いい友達ですね
 誠: いい友達です。"""
 
-chat_parameters = {'engine' : 'text-curie-001',
-                   'temperature' : 0.7,
-                   'max_tokens' : 64,
-                   'top_p' : 1,
-                   'frequency_penalty' : 0.1,
-                   'presence_penalty' : 0}
+chat_parameters = chat_parameters0
 
 def get_bot_response(prompt):
     response = openai.Completion.create(
         prompt=prompt,
-        stop=[start_sequence, restart_sequence]
+        stop=[start_sequence, restart_sequence],
         **chat_parameters
     )
     bot_response = response['choices'][0]['text']

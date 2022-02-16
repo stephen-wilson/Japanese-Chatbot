@@ -1,4 +1,4 @@
-#Using V1 parameters
+#Using chat_parameters1
 
 以下は、AIアシスタントとの会話です。このアシスタントは、親切で、創造的で、賢くて、とてもフレンドリーです。
 

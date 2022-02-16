@@ -1,7 +1,7 @@
 import deepl
 from chatbot_direct import *
 
-# use os.getenv() for actually deployment
+# use os.getenv() for actual deployment in order to hide the API key
 translator = deepl.Translator()
 
 # note: untested code, as we need an api key
@@ -17,12 +17,7 @@ Human: Hello, who are you?
 AI: I am an AI created by OpenAI. How can I help you today?
 Human:"""
 
-chat_parameters = {'engine' : 'text-curie-001',
-                   'temperature' : 0.9,
-                   'max_tokens' : 150,
-                   'top_p' : 1,
-                   'frequency_penalty' : 0,
-                   'presence_penalty' : 0.6}
+chat_parameters = chat_parameters1
 
 def chained_chat():
     chat_log = session_prompt
