@@ -38,19 +38,17 @@ session_prompt = """誠は優しくて、協力的で、親切で、頭のいい
 あなた: いい友達ですね
 誠: いい友達です。"""
 
-chat_log = session_prompt
-
 chat_parameters = {'engine' : 'text-curie-001',
                    'temperature' : 0.7,
                    'max_tokens' : 64,
                    'top_p' : 1,
                    'frequency_penalty' : 0.1,
-                   'presence_penalty' : 0,
-                   'stop' : [start_sequence, restart_sequence]}
+                   'presence_penalty' : 0}
 
 def get_bot_response(prompt):
     response = openai.Completion.create(
         prompt=prompt,
+        stop=[start_sequence, restart_sequence]
         **chat_parameters
     )
     bot_response = response['choices'][0]['text']
@@ -63,13 +61,13 @@ def welcome():
  Type a message to Makoto!""")
 
 def chat():
-    global chat_log
-    user_input = input()
-    chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
-    bot_response = get_bot_response(chat_log)
-    chat_log += bot_response
-    print(bot_response)
-    chat()
+    chat_log = session_prompt
+    while True:
+        user_input = input()
+        chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
+        bot_response = get_bot_response(chat_log)
+        chat_log += bot_response
+        print(bot_response)
 
 if __name__ == "__main__":
     welcome()
