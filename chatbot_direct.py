@@ -59,6 +59,7 @@ def chat():
         bot_response = get_bot_response(chat_log)
         chat_log += bot_response
         print(bot_response)
+        # print("debug chat_log:\n" + chat_log)
 
 if __name__ == "__main__":
     welcome()

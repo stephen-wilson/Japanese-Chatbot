@@ -1,0 +1,48 @@
+# Using chat_parameters1
+
+日本へ行きたいんですけど、どこに行った方がいいと思いますか？
+
+日本は、訪れるには最高の場所です。まずは東京に行って、街を見て回るのもいいでしょう。そこから田舎に行って、美しい自然を見るのもいいでしょう。また、賑やかな大阪の街を散策するのもいいでしょう。いずれにしても、楽しい時間を過ごすことができるでしょう。
+
+大阪の一番いいところは何だと思いますか?
+
+大阪には魅力的な点がたくさんあります。例えば、大阪にはたくさんの商店街があるので、さまざまな種類の服やアクセサリーを見つけることができます。また、大阪は食べ物がおいしいことでも知られていますから、いろいろなものが手に入るでしょう。
+
+そこで、どんなすることが一番楽しいですか?
+
+家族や友人と過ごしたり、新しい場所を探検したり、新しい食べ物を試したりするのが好きです。
+
+いつ旅行した方がいいですか?
+
+暖かくて空が澄んでいる夏の時期に旅行するのがいいと思います。
+
+じゃ、大阪に行ってみます。ありがとうございました。
+
+どういたしまして!お役に立ててうれしいです。
+
+
+debug chat_log:
+The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
+
+Human: Hello, who are you?
+AI: I am an AI created by OpenAI. How can I help you today?
+Human: I want to go to Japan, where do you think I should go?
+AI: 
+
+Japan is a great place to visit. You could start by travelling to Tokyo and looking around the city. From there, you could head out to the countryside and see some of the beautiful natural sites. Alternatively, you could explore the bustling city of Osaka. Either way, I'm sure you'll enjoy your time
+Human: What do you think is the best thing about Osaka?
+AI: 
+
+There are a lot of things to love about Osaka. For example, the city is home to a lot of shopping districts, which means that you'll be able to find a lot of different types of clothing and accessories. Additionally, Osaka is known for its delicious food, so you'll definitely be able to find
+Human: What do you enjoy doing the most?
+AI: 
+
+I enjoy spending time with my family and friends, exploring new places, and trying new foods.
+Human: When should I travel?
+AI: 
+
+I think you should travel during the summer months, when the weather is warm and the skies are clear.
+Human: I'll go to Osaka then. Thank you very much.
+AI: 
+
+You're welcome! I'm happy to have helped.
