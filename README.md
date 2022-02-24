@@ -1,6 +1,11 @@
 # Japanese-Chatbot
 Research and Development of a Japanese chatbot using various methods such as different API and pretrained models. A Spring 2022 MIT Undergraduate Research Opportunities Program project.
 
+## Purpose
+- Use for (Japanese) education
+- Able to correct user input
+- Easy for Japanese educators to use and modify
+
 ## Organization
 `data-log` contains scenarios and chat logs for testing and evaluation of different chatbot models.
 
@@ -18,3 +23,28 @@ Chat with the GPT-3 Japanese chatbot by running:
 Chat with the chained Japanese chatbot by running:
 
 `python chatbot_chained.py`
+
+## Tasks
+
+### Baseline Models
+- [x] GPT-3 J->J direct system
+- [x] DeepL -> GPT-3 -> DeepL chained system
+
+### Model Improvements/Research
+- [x] Improve baseline models
+  - [ ] Give (part of) chat log to DeepL, slightly improving translation quality
+- [ ] Look into ways for correcting user input
+- [ ] Look into ways to tune difficulty of output
+- [ ] Look into using pretrained models
+- [ ] Make sure the model doesn't output anything inappropriate
+
+### Testing
+- Scenarios
+  1. [ ] Create multiple scenarios
+  2. [ ] Test on different scenarios
+  3. [ ] Rate on quality of responses
+- Colloquial Japanese
+- Different dialects
+
+### Journal Research
+- [ ] Look into English chatbots for ESL
