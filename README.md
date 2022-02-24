@@ -32,7 +32,7 @@ Chat with the chained Japanese chatbot by running:
 
 ### Model Improvements/Research
 - [x] Improve baseline models
-  - [ ] Give (part of) chat log to DeepL, slightly improving translation quality
+  - [x] Give (part of) chat log to DeepL, slightly improving translation quality
 - [ ] Look into ways for correcting user input
 - [ ] Look into ways to tune difficulty of output
 - [ ] Look into using pretrained models
