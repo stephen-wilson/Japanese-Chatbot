@@ -1,31 +1,35 @@
 import deepl
-from chatbot_direct import *
+import chatbot_direct as cd
+from parameters import *
 
 # use os.getenv() for actual deployment in order to hide the API key
 translator = deepl.Translator("688506d1-e0db-eb66-9b4f-b2ba1a41dfad:fx")
 
 def translate(text, target_lang):
-    return translator.translate_text(text, target_lang=target_lang)
+    return str(translator.translate_text(text, target_lang=target_lang))
 
-start_sequence = "AI:"
-restart_sequence = "Human:"
-session_prompt = """The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
+cd.start_sequence = "AI:"
+cd.restart_sequence = "Human:"
+cd.session_prompt = """The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. The assistant also talks in very simple English.
 
 Human: Hello, who are you?
-AI: I am an AI created by OpenAI. How can I help you today?"""
+AI: I am an AI created by OpenAI. What would you like to talk about today?"""
 
-chat_parameters = chat_parameters1
+cd.chat_parameters = chat_parameters1
 
-def chained_chat():
-    chat_log = session_prompt
-    while True:
-        user_input = translate(input(), "EN-US")
-        chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
-        bot_response = get_bot_response(chat_log)
-        chat_log += bot_response
-        print(translate(bot_response, "JA"))
-        # print("debug chat_log:\n" + chat_log)
+def chat():
+    separator = "\n\n"
+    translated = ""
+    def translate_with_context(text, target_lang):
+        nonlocal translated
+        translated = translate(translated + separator + text, target_lang).split(separator)[1]
+        return translated
+    def user_hook(input):
+        return translate_with_context(input, "EN-US")
+    def bot_hook(bot_response):
+        return translate_with_context(bot_response, "JA")
+    cd.chat_base(user_hook, bot_hook)
 
 if __name__ == "__main__":
-    welcome()
-    chained_chat()
+    cd.welcome()
+    chat()

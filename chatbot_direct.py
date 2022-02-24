@@ -51,16 +51,26 @@ def welcome():
  But besides that, feel free to test out the bot! Press 'ctrl C' to stop the chat!
  Type a message to Makoto!""")
 
-def chat():
+def chat_base(user_hook, bot_hook):
+    '''
+    user_hook is given the user input, and should return text to give to the bot
+    bot_hook is given the bot response, and should return text to send to the user
+    '''
     chat_log = session_prompt
     while True:
-        user_input = input()
+        user_input = user_hook(input())
         chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
-        bot_response = get_bot_response(chat_log)
+        bot_response = get_bot_response(chat_log).strip()
         chat_log += bot_response
-        print(bot_response)
-        # print("debug chat_log:\n" + chat_log)
+        print(bot_hook(bot_response))
+        print("debug chat_log:\n" + chat_log)
+        
+def identity(x):
+    return x
 
+def chat():
+    chat_base(identity, identity)
+        
 if __name__ == "__main__":
     welcome()
     chat()
