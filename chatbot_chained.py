@@ -18,12 +18,14 @@ AI: I am an AI created by OpenAI. What would you like to talk about today?"""
 cd.chat_parameters = chat_parameters1
 
 def chat():
+    # somewhat ad-hoc way to add context to translation
     separator = "\n\n"
     translated = ""
     def translate_with_context(text, target_lang):
         nonlocal translated
         translated = translate(translated + separator + text, target_lang).split(separator)[1]
         return translated
+    
     def user_hook(input):
         return translate_with_context(input, "EN-US")
     def bot_hook(bot_response):
