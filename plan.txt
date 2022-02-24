@@ -1,3 +1,0 @@
-- Test chained system
-- Come up with multiple scenarios, gather data, rate on quality of responses
-- Find ways to improve direct Japanese chatbot
