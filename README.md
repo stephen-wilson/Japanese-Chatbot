@@ -2,9 +2,17 @@
 Research and Development of a Japanese chatbot using various methods such as different API and pretrained models. A Spring 2022 MIT Undergraduate Research Opportunities Program project.
 
 ## Purpose
-- Use for (Japanese) education
-- Able to correct user input
-- Easy for Japanese educators to use and modify
+Provide an easy-to-use, convenient, non-judgemental, and productive AI language partner for languager learners to practice input and output and develop confidence in their language abilities. This chatbot should also be easy for instructors to use and modify. 
+
+## Features
+- [x] Baseline models using API
+- [ ] Pretrained models
+- [ ] Multiple chatbots
+  - [ ] For different ability levels (eg. beginner, intermediate, advanced)
+  - [ ] Domain-specific (eg. trip advisor, teacher, student, etc.)
+  - [ ] Different personalities
+- [ ] Correct user input or Provide feedback
+- [ ] Speech-to-text and text-to-speech
 
 ## Organization
 `data-log` contains scenarios and chat logs for testing and evaluation of different chatbot models.
@@ -33,9 +41,11 @@ Chat with the chained Japanese chatbot by running:
 ### Model Improvements/Research
 - [x] Improve baseline models
   - [x] Give (part of) chat log to DeepL, slightly improving translation quality
-- [ ] Look into ways for correcting user input
-- [ ] Look into ways to tune difficulty of output
 - [ ] Look into using pretrained models
+  - [ ] BERT
+  - [ ] GPT-2
+- [ ] Look into ways for correcting or providing feedback on user input
+- [ ] Look into ways to tune difficulty of output (eg. word choice, output length)
 - [ ] Make sure the model doesn't output anything inappropriate
 
 ### Testing
@@ -45,6 +55,7 @@ Chat with the chained Japanese chatbot by running:
   3. [ ] Rate on quality of responses
 - Colloquial Japanese
 - Different dialects
+- [ ] Note down strengths and weaknesses (limitations) of different models (eg. customizability, quality of responses, etc.)
 
 ### Journal Research
-- [ ] Look into English chatbots for ESL
+- [x] Look into English chatbots for ESL
