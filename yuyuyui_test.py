@@ -35,9 +35,11 @@ class Interlocutor():
         return response
 
 
-model_name = "けん"
-human_name = "ロバート"
-opening_line = "ロバートさんはどんなスポーツが好きですか。"
+model_name = "山伏 しずく"
+human_name = "某"
+opening_line = """どんなスポーツが好きなの？"""
+# to continue a conversation, append the rest of the log to the opening line
+opening_line = re.sub("\\n\\*?", "", opening_line)
 
 interlocutor = Interlocutor(tokenizer, model, f"<{model_name}>",
                             initial_line=opening_line)
@@ -47,10 +49,12 @@ def chat():
     while True:
         print(f"<{human_name}>", end="")
         user_input = input()
-        if user_input == "exit":
+        if "exit" in user_input:
             break
+        if "clear" in user_input:
+            continue
         model_input = interlocutor.generate(user_input)
-        print(f"<{model_name}>{model_input}")
+        print(f"*<{model_name}>{model_input}")
 
 if __name__ == "__main__":
     chat()
