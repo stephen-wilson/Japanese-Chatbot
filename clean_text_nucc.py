@@ -7,17 +7,25 @@ def clean_file(s, human_name, model_name):
     model_code = None
     human_code = None
     line = None
+    def clean_and_append():
+        lines.append(re.sub(r"\(.*\)|<.*>|（.*）|＜.*＞", "", line))
     for l in s.split():
         if "＠" in l:
             code = re.match(r"＠参加者([F|M]\d+)", l)
             if code:
                 if model_code is None:
                     model_code = code.groups()[0]
+                    if model_name is None:
+                        model_name = model_code
                 elif human_code is None:
                     human_code = code.groups()[0]
+                    if human_name is None:
+                        human_name = human_code
                 else:
                     print("too many participants; skipping...")
                     return None
+            if re.match(r"＠[参加者|場所]", l):
+                lines.append(l)
             continue
         delim = "："
         if re.match(r"[F|M]\d+"+delim, l):
@@ -28,19 +36,19 @@ def clean_file(s, human_name, model_name):
                 print("too many participants; skipping...")
                 return None
             if line is not None:
-                lines.append(line)
+                clean_and_append()
             line = author + delim + message
         elif line is not None:
             line += l
-    lines.append(line)
+    clean_and_append()
     print(len(lines))
     return "\n".join(lines)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', default="AI")
-    parser.add_argument('--human_name', default="人間")
+    parser.add_argument('--model_name', default=None)
+    parser.add_argument('--human_name', default=None)
     parser.add_argument('-n', '--filename_format', type=eval, dest="filename_of",
                         default=lambda i: f"data{i+1:03}.txt",
                         help="labeling function (e.g. 0 => 'data001.txt', etc.)")
