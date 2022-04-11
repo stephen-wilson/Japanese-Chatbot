@@ -34,16 +34,16 @@ session_prompt = """誠は優しくて、協力的で、親切で、頭のいい
 あなた: いい友達ですね
 誠: いい友達です。"""
 
-chat_parameters = chat_parameters0
-
-def get_bot_response(prompt):
-    response = openai.Completion.create(
-        prompt=prompt,
-        stop=[start_sequence, restart_sequence],
-        **chat_parameters
-    )
-    bot_response = response['choices'][0]['text']
-    return str(bot_response)
+def make_get_bot_response(chat_parameters):
+    def get_bot_response(prompt):
+        response = openai.Completion.create(
+            prompt=prompt,
+            stop=[start_sequence, restart_sequence],
+            **chat_parameters
+        )
+        bot_response = response['choices'][0]['text']
+        return str(bot_response)
+    return get_bot_response
 
 def welcome():
     print("""Welcome to the chatbot!
@@ -51,26 +51,42 @@ def welcome():
  But besides that, feel free to test out the bot! Press 'ctrl C' to stop the chat!
  Type a message to Makoto!""")
 
-def chat_base(user_hook, bot_hook):
+class Chatbot:
     '''
     user_hook is given the user input, and should return text to give to the bot
     bot_hook is given the bot response, and should return text to send to the user
     '''
-    chat_log = session_prompt
-    while True:
-        user_input = user_hook(input())
-        chat_log += f'\n{restart_sequence} {user_input}\n{start_sequence} '
-        bot_response = get_bot_response(chat_log).strip()
-        chat_log += bot_response
+    def __init__(self, start_sequence,
+                 restart_sequence,
+                 session_prompt,
+                 get_bot_response):
+        self.start_sequence = start_sequence
+        self.restart_sequence = restart_sequence
+        self.session_prompt = session_prompt
+        self.get_bot_response = get_bot_response
+
+        self.chat_log = session_prompt
+
+    def chat(self, user_hook, bot_hook):
+        while True:
+            self.chat_once(input(), user_hook, bot_hook)
+
+    def chat_once(self, raw_user_input, user_hook, bot_hook):
+        user_input = user_hook(raw_user_input)
+        self.chat_log += f'\n{self.restart_sequence} {user_input}\n{self.start_sequence} '
+        bot_response = self.get_bot_response(self.chat_log).strip()
+        self.chat_log += bot_response
         print(bot_hook(bot_response))
-        print("debug chat_log:\n" + chat_log)
+        print("debug chat_log:\n" + self.chat_log)
+        return bot_hook(bot_response)
         
 def identity(x):
     return x
-
-def chat():
-    chat_base(identity, identity)
         
 if __name__ == "__main__":
     welcome()
-    chat()
+    bot = Chatbot(start_sequence,
+                 restart_sequence,
+                 session_prompt,
+                 make_get_bot_response(chat_parameters0))
+    bot.chat(identity, identity)
