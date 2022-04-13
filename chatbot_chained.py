@@ -1,6 +1,6 @@
 import deepl
-import chatbot_direct as cd
-from parameters import *
+from . import chatbot_direct as cd
+from .parameters import *
 
 # use os.getenv() for actual deployment in order to hide the API key
 translator = deepl.Translator("688506d1-e0db-eb66-9b4f-b2ba1a41dfad:fx")
@@ -10,10 +10,10 @@ def translate(text, target_lang):
 
 start_sequence = "AI:"
 restart_sequence = "Human:"
-session_prompt = """The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. The assistant also talks in very simple English.
+# session_prompt = """The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. The assistant also talks in very simple English.
 
-Human: Hello, who are you?
-AI: I am an AI created by OpenAI. What would you like to talk about today?"""
+# Human: Hello, who are you?
+# AI: I am an AI created by OpenAI. What would you like to talk about today?"""
 
 def chat(bot):
     # somewhat ad-hoc way to add context to translation
@@ -30,12 +30,38 @@ def chat(bot):
         return translate_with_context(bot_response, "JA")
     bot.chat(user_hook, bot_hook)
 
+class ChainedChatbot:
+    def __init__(self, 
+            lang_code="JA", 
+            inner_lang_code="EN-US",
+            session_prompt="",
+            chat_parameters=chat_parameters1):
+        self.bot = cd.Chatbot(
+            start_sequence,
+            restart_sequence,
+            session_prompt,
+            cd.make_get_bot_response(chat_parameters)
+        )
+        self.session_prompt = session_prompt  # should be in inner language
+        self.lang_code = lang_code
+        self.inner_lang_code = inner_lang_code
+        self.chat_parameters = chat_parameters
+    
+    def user_hook(self, input):
+        return translate(input, self.inner_lang_code)
+
+    def bot_hook(self, bot_response):
+        return translate(bot_response, self.lang_code)
+
+    def get_chat_log(self):
+        return self.bot.chat_log
+    
+    def chat_once(self, input_history):
+        return self.bot.chat_once(input_history, self.user_hook, self.bot_hook)
+
 if __name__ == "__main__":
     cd.welcome()
-    bot = cd.Chatbot(start_sequence,
-                 restart_sequence,
-                 session_prompt,
-                 cd.make_get_bot_response(chat_parameters1))
+    bot = ChainedChatbot()
     chat(bot)
 
 #     inputs = """どこに住んでる？
@@ -69,17 +95,9 @@ if __name__ == "__main__":
 # メガネをかけてる？
 # インド料理を食べたことがある？"""
 #
-#     def user_hook(input):
-#         return translate(input, "EN-US")
-#     def bot_hook(bot_response):
-#         return translate(bot_response, "JA")
-#
 #     def test_chat(query):
-#         bot = cd.Chatbot(start_sequence,
-#                          restart_sequence,
-#                          session_prompt,
-#                          cd.make_get_bot_response(chat_parameters1))
-#         return bot.chat_once(query, user_hook, bot_hook)
+#         bot = ChainedChatbot()
+#         return bot.chat_once(query)
 #
 #     outputs = list(map(test_chat, inputs.split("\n")))
 #     print("\n".join(outputs))

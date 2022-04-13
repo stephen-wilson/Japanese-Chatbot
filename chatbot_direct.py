@@ -1,6 +1,6 @@
 import openai
 #import os
-from parameters import *
+from .parameters import *
 
 # use os.getenv() for actual deployment in order to hide the API key
 openai.api_key = "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"
