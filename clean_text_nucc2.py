@@ -83,5 +83,5 @@ if __name__ == '__main__':
         
         data = format_full_conversation(metadata, conversation)
         
-        with open(output_directory / filename, 'w') as f:
+        with open(output_directory / f'{filepath.stem}.txt', 'w') as f:
             f.write(data)
