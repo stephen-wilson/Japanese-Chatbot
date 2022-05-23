@@ -19,13 +19,15 @@ def load_conversation(data):
 
 def clean_conversation(metadata, conversation):
     """
-    Removes parentheticals from the conversation
-    and stop conversation when ＊ is reached.
+    Removes parentheticals and double periods from the
+    conversation. Stop conversation when ＊ is reached.
     Returns new conversation
     """
     result = []
     for s, u in conversation:
-        u = remove_parentheticals(u)
+        # double periods result from removing parentheticals
+        u = remove_parentheticals(u).replace('。。', '。')
+        
         # note: this is fairly drastic, but we should still have
         # sufficient data for fine-tuning. But keeping it is probably
         # fine? (we can restrict output to not contain ＊ (?))
