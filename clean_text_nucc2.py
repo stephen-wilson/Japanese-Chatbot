@@ -50,14 +50,31 @@ def format_metadata(metadata):
         relation = f"<参加者の関係>{relation}\n"
     return f'{place}{participants}{relation}'
 
+# output less metadata to reduce token size during fine tuning
+def format_metadata2(metadata):
+    participants = '<参加者>\n' + ''.join(f"{p['コード']}は{p['描写'].split('、')[0]}\n"
+                                         for p in metadata['参加者'])
+    relation = metadata['参加者の関係']
+    if relation is None:
+        relation = ''
+    else:
+        relation = f"<関係>{relation}\n"
+    return f'{participants}{relation}'
+
 def format_conversation(conversation):
     return '<会話>\n' + '\n'.join(f"<{s}>{u}" for s, u in conversation)
+
+def format_conversation2(conversation, participants):
+    return '<会話>\n' + '\n'.join(f"<{s}>{u}"
+                                 for s, u in conversation
+                                 if s in participants)
 
 def format_full_conversation(metadata, conversation):
     """
     Formats the conversation so that it is easy to fine-tune on
     """
-    data = format_metadata(metadata) + format_conversation(conversation)
+    participants = [p['コード'] for p in metadata['参加者']]
+    data = format_metadata2(metadata) + format_conversation2(conversation, participants)
     # also replace speaker names: [F023, M016] -> [F1, M2]
     for i, p in enumerate(metadata['参加者'], 1):
         code = p['コード']
@@ -66,7 +83,7 @@ def format_full_conversation(metadata, conversation):
 
 if __name__ == '__main__':
     input_directory = Path('nucc_clean/')
-    output_directory = Path('nucc_for_finetune/')
+    output_directory = Path('nucc_for_finetune_less_metadata/')
     output_directory.mkdir(exist_ok=True)
     
     for filepath in input_directory.glob('*'):
